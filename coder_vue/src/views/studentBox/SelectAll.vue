@@ -1,5 +1,28 @@
 <template>
   <div class="container">
+     <!-- 查找框 -->
+     <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
+        <el-form-item label="ID" :rules="[
+            { required: true, message: '请输入ID！', trigger: 'blur' }
+        ]" prop="id">
+            <el-input v-model="formInline.id" placeholder="请输入ID查询"></el-input>
+        </el-form-item>
+
+        <!-- <el-form-item label="学号" :rules="[{
+            required: true, message: '请输入学号！', trigger: 'blur'
+        }]" prop="number">
+            <el-input v-model="formInline.number" placeholder="请输入学号查询"></el-input>
+        </el-form-item> -->
+
+        <el-form-item>
+            <el-button type="primary" @click="serachName">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="success" @click="getInfo()">查询重置</el-button>
+        </el-form-item>
+
+      </el-form>
+    
     <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading">
       <el-table-column prop="id" label="id" width="130px"></el-table-column>
       <el-table-column prop="date" label="date" width="210"></el-table-column>
@@ -38,7 +61,11 @@ export default {
       totalNum: 0,
       currentPage: 1,
       tableData: [],
-      loading: true
+      loading: true,
+      formInline: {
+          id: ''
+      },
+      error: ''
     }
   },
   created () {
@@ -46,7 +73,10 @@ export default {
   },
   methods: {
     getInfo () {
+      this.tableData = []// 清空原来的数据
       axios.get('/stu/info/acmer/atcoder/all/1/100').then(res => {
+        this.loading = true; // 开始加载数据，显示 loading 状态
+        this.error = null; // 清空错误信息
         if (res.data.code === 200) {
           this.loading = false
           const msgInfo = res.data.data.records
@@ -67,6 +97,58 @@ export default {
         }
       })
     },
+
+    serachName() {
+      // 发送查询请求
+      this.tableData = []// 清空原来的数据
+      axios.get(`/stu/info/acmer/atcoder/serach/${this.formInline.id}`)
+        .then(response => {
+          this.loading = true; // 开始加载数据，显示 loading 状态
+          this.error = null; // 清空错误信息
+          // 处理查询结果
+          if (response.data.code === 200) {
+            this.loading = false
+            //更新tableData
+            const item = response.data.data
+            this.tableData.push({
+              id: item.acId,
+              date: item.acDate,
+              contest: item.acContest,
+              rank: item.acRank,
+              performance: item.acPerformance,
+              newRating: item.acNewrating,
+              diff: item.acDiff,
+              count: item.acCount,
+              maxrating: item.acMaxrating,
+            })
+            // for (const item of msgInfo) {
+            //   console.log("~~"+item);
+            //   if(item.acId!='undefined'){
+            //     this.tableData.push({
+            //       id: msgInfo.acId,
+            //       date: item.acDate,
+            //       contest: item.acContest,
+            //       rank: item.acRank,
+            //       performance: item.acPerformance,
+            //       newRating: item.acNewrating,
+            //       diff: item.acDiff,
+            //       count: item.acCount,
+            //       maxrating: item.acMaxrating,
+            //     })
+            //   }
+            // }
+            this.totalNum = this.tableData.length
+          } else {
+            this.error = response.data.message;
+          }
+        })
+        .catch(error => {
+          //console.error(error);
+          this.$message.error('查询失败');
+        });
+    },
+
+    
     handleCurrentChange (val) {
       this.currentPage = val
     }
@@ -76,6 +158,10 @@ export default {
 
 <style scoped>
 .container {
+  margin-top: 20px;
+  .demo-form-inline {
+      text-align: left;
+  }
   width: 100%;
   background-color: white;
   box-sizing: border-box;
