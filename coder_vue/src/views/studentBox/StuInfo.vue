@@ -1,8 +1,56 @@
 <template>
   <div class="container">
     <div style="margin-top: 2%;margin-bottom: 1%">
-      <el-button type="primary" @click="addStu">新增</el-button>
+      <!-- 查找框 -->
+      <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
+        <el-form-item>
+          <el-button type="primary" @click="addStu">新增</el-button>
+        </el-form-item>
+     
+        <el-form-item label="Name" :rules="[
+            { required: true, message: '请输入Name！', trigger: 'blur' }
+        ]" prop="name">
+            <el-input v-model="formInline.name" placeholder="请输入Name查询"></el-input>
+        </el-form-item>
+
+        <!-- <el-form-item label="学号" :rules="[{
+            required: true, message: '请输入学号！', trigger: 'blur'
+        }]" prop="number">
+            <el-input v-model="formInline.number" placeholder="请输入学号查询"></el-input>
+        </el-form-item> -->
+
+        <el-form-item>
+            <el-button type="primary" @click="serachName">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="success" @click="getInfo()">查询重置</el-button>
+        </el-form-item>
+
+      </el-form>
     </div>
+     <!-- 查找框 -->
+     <!-- <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
+        <el-form-item label="Name" :rules="[
+            { required: true, message: '请输入Name！', trigger: 'blur' }
+        ]" prop="name">
+            <el-input v-model="formInline.id" placeholder="请输入Name查询"></el-input>
+        </el-form-item> -->
+
+        <!-- <el-form-item label="学号" :rules="[{
+            required: true, message: '请输入学号！', trigger: 'blur'
+        }]" prop="number">
+            <el-input v-model="formInline.number" placeholder="请输入学号查询"></el-input>
+        </el-form-item> -->
+
+        <!-- <el-form-item>
+            <el-button type="primary" @click="serachName">查询</el-button>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="success" @click="getInfo()">查询重置</el-button>
+        </el-form-item>
+
+      </el-form> -->
+
     <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading">
       <el-table-column prop="stuNo" label="stuNo" width="120"></el-table-column>
       <el-table-column prop="stuName" label="stuName" ></el-table-column>
@@ -69,7 +117,11 @@ export default {
       loading: true,
       formData: {},
       showDialog: false,
-      dialogtitle: ''
+      dialogtitle: '',
+      formInline: {
+          name: ''
+      },
+      error: ''
     }
   },
   created () {
@@ -95,6 +147,43 @@ export default {
         }
       })
     },
+    serachName() {
+      // 发送查询请求
+      this.tableData = []// 清空原来的数据
+      axios.get(`/stu/info/acmer/student/all/${this.formInline.name}`)
+        .then(response => {
+          //this.loading = true; // 开始加载数据，显示 loading 状态
+          //this.error = null; // 清空错误信息
+          // 处理查询结果
+          console.log(response)
+          if (response.status === 200) {
+            //this.loading = false
+            //更新tableData
+            const msgInfo = response.data
+            console.log(response)
+            console.log(msgInfo)
+            for (const item in msgInfo) {
+              this.tableData.push({
+                stuNo: msgInfo[item].stuNo,
+                stuName: msgInfo[item].stuName,
+                stuClass: msgInfo[item].stuClass,
+                stuAcId: msgInfo[item].stuAcId,
+                stuCfId: msgInfo[item].stuCfId,
+              })
+            }
+            
+            this.totalNum = this.tableData.length
+          } else {
+            console.log()
+            this.error = response.data.message;
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          this.$message.error('查询失败');
+        });
+    },
+
     handleCurrentChange (val) {
       this.currentPage = val
     },
@@ -152,6 +241,10 @@ export default {
 
 <style scoped>
 .container {
+  /* margin-top: 20px;
+  .demo-form-inline {
+      text-align: left;
+  } */
   width: 100%;
   background-color: white;
   box-sizing: border-box;

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import StudentIndex from '../views/StudentIndex.vue'
 import SelectAll from '../views/studentBox/SelectAll.vue'
 import StuInfo from '../views/studentBox/StuInfo'
+import VisualHistogram from '../views/visualBox/VisualHistogram.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,10 @@ const routes = [{
     path: '/StuInfo',
     name: 'StuInfo',
     component: StuInfo
+  }, {
+    path: '/VisualHistogram',
+    name: 'VisualHistogram',
+    component: VisualHistogram
   }
   ]
 }

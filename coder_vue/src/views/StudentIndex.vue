@@ -19,6 +19,34 @@
             <i class="iconfont icon-geren3"></i>
             <span slot="title">学生基本信息</span>
           </el-menu-item>
+
+          <!-- <el-menu-item index="3" @click="histogram()">
+            <i class="iconfont icon-geren3"></i>
+            <span slot="title">图</span>
+          </el-menu-item> -->
+
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-data-analysis"></i>
+              <span>数据可视化</span>
+            </template>
+            <el-menu-item-group>
+              <template slot="title">分组一</template>
+              <el-menu-item index="3-1" @click="histogram()">
+                <i class="iconfont icon-geren3"></i>
+                <span slot="title">柱状图</span>
+              </el-menu-item>
+              <el-menu-item index="3-2">选项2</el-menu-item>
+            </el-menu-item-group>
+            <!-- <el-menu-item-group title="分组2">
+              <el-menu-item index="1-3">选项3</el-menu-item>
+            </el-menu-item-group>
+            <el-submenu index="1-4">
+              <template slot="title">选项4</template>
+              <el-menu-item index="1-4-1">选项1</el-menu-item>
+            </el-submenu> -->
+          </el-submenu>
+
         </el-menu>
       </el-col>
     </el-row>
@@ -73,6 +101,11 @@ export default {
     stuInfo () {
       if (this.$route.name !== 'StuInfo') {
         this.$router.replace({ path: '/StuInfo' })
+      }
+    },
+    histogram () {
+      if (this.$route.name !== 'VisualHistogram') {
+        this.$router.replace({ path: '/VisualHistogram' })
       }
     }
   }

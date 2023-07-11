@@ -27,7 +27,7 @@
       <el-table-column prop="id" label="id" width="130px"></el-table-column>
       <el-table-column prop="date" label="date" width="210"></el-table-column>
       <el-table-column prop="contest" label="contest" width="180px"></el-table-column>
-      <el-table-column prop="rank" label="rank"></el-table-column>
+      <el-table-column prop="rank" label="rank" sortable></el-table-column>
       <el-table-column prop="performance" label="performance" width="120px"></el-table-column>
       <el-table-column prop="newRating" label="newRating" width="120px"></el-table-column>
       <el-table-column prop="diff" label="diff" width="80px"></el-table-column>
@@ -101,7 +101,7 @@ export default {
     serachName() {
       // 发送查询请求
       this.tableData = []// 清空原来的数据
-      axios.get(`/stu/info/acmer/atcoder/serach/${this.formInline.id}`)
+      axios.get(`/stu/info/acmer/atcoder/all/${this.formInline.id}`)
         .then(response => {
           this.loading = true; // 开始加载数据，显示 loading 状态
           this.error = null; // 清空错误信息
@@ -110,6 +110,8 @@ export default {
             this.loading = false
             //更新tableData
             const item = response.data.data
+            console.log(response.data)
+            console.log(item)
             this.tableData.push({
               id: item.acId,
               date: item.acDate,
@@ -121,29 +123,14 @@ export default {
               count: item.acCount,
               maxrating: item.acMaxrating,
             })
-            // for (const item of msgInfo) {
-            //   console.log("~~"+item);
-            //   if(item.acId!='undefined'){
-            //     this.tableData.push({
-            //       id: msgInfo.acId,
-            //       date: item.acDate,
-            //       contest: item.acContest,
-            //       rank: item.acRank,
-            //       performance: item.acPerformance,
-            //       newRating: item.acNewrating,
-            //       diff: item.acDiff,
-            //       count: item.acCount,
-            //       maxrating: item.acMaxrating,
-            //     })
-            //   }
-            // }
             this.totalNum = this.tableData.length
           } else {
+            console.log()
             this.error = response.data.message;
           }
         })
         .catch(error => {
-          //console.error(error);
+          console.error(error);
           this.$message.error('查询失败');
         });
     },
