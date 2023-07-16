@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.buct.acmer.mapper.CodeforcesMapper">
+    <select id="count" resultType="int" parameterType="map">
+        SELECT COUNT(CASE WHEN cf_new_rating > #{begin} AND cf_new_rating < #{end} THEN 1 END)
+        FROM codeforces
+    </select>
 
+    <select id="asc" resultMap="BaseResultMap">
+        SELECT * FROM codeforces ORDER BY cf_rank ASC
+    </select>
+
+    <select id="desc" resultMap="BaseResultMap">
+        SELECT * FROM codeforces ORDER BY cf_rank DESC
+    </select>
+
+    <!--    <select id="count" resultType="int" parameterType="map">-->
+    <!--        SELECT COUNT(*)-->
+    <!--        FROM codeforces-->
+    <!--        WHERE cf_new_rating &gt; #{begin} AND cf_new_rating &lt; #{end}-->
+    <!--    </select>-->
 </mapper>
