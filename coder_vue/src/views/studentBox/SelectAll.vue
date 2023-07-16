@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div style="margin-top: 2%;margin-bottom: 1%">
      <!-- 查找框 -->
      <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
         <el-form-item label="ID" :rules="[
@@ -21,13 +22,21 @@
             <el-button type="success" @click="getInfo()">查询重置</el-button>
         </el-form-item>
 
+        <el-form-item>
+            <el-button type="primary" @click="rising">按排名升序</el-button>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="rankdown">按排名降序</el-button>
+        </el-form-item>
+
       </el-form>
-    
+    </div>
     <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading">
-      <el-table-column prop="id" label="id" width="130px"></el-table-column>
-      <el-table-column prop="date" label="date" width="210"></el-table-column>
+      @sort-change="sortChange"
+      <el-table-column prop="id" label="id" width="130px" sortable ></el-table-column>
+      <el-table-column prop="date" label="date" width="210" sortable ></el-table-column>
       <el-table-column prop="contest" label="contest" width="180px"></el-table-column>
-      <el-table-column prop="rank" label="rank" sortable></el-table-column>
+      <el-table-column prop="rank" label="rank"></el-table-column>
       <el-table-column prop="performance" label="performance" width="120px"></el-table-column>
       <el-table-column prop="newRating" label="newRating" width="120px"></el-table-column>
       <el-table-column prop="diff" label="diff" width="80px"></el-table-column>
@@ -132,6 +141,73 @@ export default {
         .catch(error => {
           console.error(error);
           this.$message.error('查询失败');
+        });
+    },
+    //升序排序
+    rising () {
+      //console.log(12121212)
+      axios.get('/stu/info/acmer/atcoder//rank/asc')
+        .then(response => {
+          console.log(2323232)
+          console.log(response)
+          if (response.data.code === 200) {
+            this.tableData=[]
+            const msgInfo=response.data.data
+            for(const item in msgInfo){
+              this.tableData.push(
+                {
+                  id: msgInfo[item].acId,
+                  date: msgInfo[item].acDate,
+                  contest: msgInfo[item].acContest,
+                  rank: msgInfo[item].acRank,
+                  performance: msgInfo[item].acPerformance,
+                  newRating: msgInfo[item].acNewrating,
+                  diff: msgInfo[item].acDiff,
+                  count: msgInfo[item].acCount,
+                  maxrating: msgInfo[item].acMaxrating,
+                }
+              )
+            }
+            this.totalNum = this.tableData.length
+          }
+      })
+      .catch(error => {
+          console.error(error);
+          this.$message.error('排序失败');
+        });
+    },
+
+    //降序排序
+    rankdown () {
+      //console.log(12121212)
+      axios.get('/stu/info/acmer/atcoder//rank/desc')
+        .then(response => {
+          console.log(2323232)
+          console.log(response)
+          if (response.data.code === 200) {
+            this.tableData=[]
+            const msgInfo=response.data.data
+            for(const item in msgInfo){
+              this.tableData.push(
+                {
+                  id: msgInfo[item].acId,
+                  date: msgInfo[item].acDate,
+                  contest: msgInfo[item].acContest,
+                  rank: msgInfo[item].acRank,
+                  performance: msgInfo[item].acPerformance,
+                  newRating: msgInfo[item].acNewrating,
+                  diff: msgInfo[item].acDiff,
+                  count: msgInfo[item].acCount,
+                  maxrating: msgInfo[item].acMaxrating,
+                }
+              )
+            }
+            this.totalNum = this.tableData.length
+          }
+      })
+      .catch(error => {
+          console.error(error);
+          this.$message.error('排序失败');
         });
     },
 

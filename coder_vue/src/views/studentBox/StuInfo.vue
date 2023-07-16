@@ -159,7 +159,7 @@ export default {
           if (response.status === 200) {
             //this.loading = false
             //更新tableData
-            const msgInfo = response.data
+            const msgInfo = response.data.data
             console.log(response)
             console.log(msgInfo)
             for (const item in msgInfo) {
