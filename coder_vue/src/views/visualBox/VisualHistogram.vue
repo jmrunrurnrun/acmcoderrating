@@ -1,91 +1,115 @@
 <template>
-    <div>
-        <h1>mistakescollection</h1>
+    <div >
+        <div class="titles" style="margin-top: 2%;margin-bottom: 1%">
+            <h1>Codeforces积分区间统计</h1>
+            <h3>Codeforces积分区间统计（横轴积分，纵轴人数）</h3>
+        </div>
+        
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-        <div id="main1" style="width: 600px;height:400px;"></div>
-        <div id="main2" style="width: 600px;height:400px;"></div>
+        <div id="main1" :style="{width: '100%', height: '600px'}"></div>
     </div>
 </template>
  
 <script>
- 
-export default {
-    name: 'MistakesCollection',
-    data () {
-        return {
-            msg: 'Welcome to Your Vue.js App'
-        }
-    },
-    mounted(){
-        this.drawLine1();
-        this.drawLine2();
-    },
-    methods: {
-        drawLine1(){
-            // 基于准备好的dom，初始化echarts实例
-            let myChart = this.$echarts.init(document.getElementById('main1'))
-            // 绘制图表
-            myChart.setOption({
-                //backgroundColor: '#2c343c',
-                title: { text: 'drawLine1' },
-                tooltip: {},
-                xAxis: {
-                    data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-                },
-                yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            });
+    import axios from 'axios'
+    import * as echarts from 'echarts'
+    export default {
+        //name: 'CodeforcesRating',
+        data () {
+            return {
+                msg: 'Welcome to Your Vue.js App'
+            }
         },
-        drawLine2(){
-            // 基于准备好的dom，初始化echarts实例
-            let myChart = this.$echarts.init(document.getElementById('main2'))
-            // 绘制图表
-            myChart.setOption({
-                backgroundColor: '#2c343c',
-                series : [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: '55%',
-                        data:[
-                            {value:235, name:'视频广告'},
-                            {value:274, name:'联盟广告'},
-                            {value:310, name:'邮件营销'},
-                            {value:335, name:'直接访问'},
-                            {value:400, name:'搜索引擎'}
-                        ],
-                        roseType: 'angle',
-                        label: {
-                            normal: {
-                                textStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
+        mounted(){
+            this.drawLine1();
+        },
+        methods: {
+            drawLine1(){
+                //console.log(1212)
+                axios.get('/stu/info/acmer/echarts/numbers')
+                    .then(response => {
+                    // 获取到后端返回的数据
+                    const data = response.data.data;
+                    console.log(data)
+                    // 基于准备好的dom，初始化echarts实例
+                    let myChart = this.$echarts.init(document.getElementById('main1'))
+                    // 绘制图表
+                    myChart.setOption({
+                        backgroundColor: '#191E40',
+                        title: {
+                            text: 'CodeforcesRating',
+                            subtext: 'Codeforces积分区间统计（横轴积分，纵轴人数）',
+                            left: 'center'
+                        },
+                        //subtitle: { text: 'Codeforces积分区间统计（横轴积分，纵轴人数）' },
+                        tooltip: {
+                            trigger: 'axis',
+                            backgroundColor:'#5bc0de',
+                            textStyle:{
+                                color:'#ffffff',
+                                fontSize:18,
+                                fontWeight:'normal',
+                            },
+                            axisPointer: {
+                                type: 'shadow',
+                                label: {
+                                    fontSize:16,
+                                    show: true,
+                                    backgroundColor: '#7B7DDC'
                                 }
                             }
                         },
-                        labelLine: {
-                            normal: {
+                        xAxis: {
+                            data: ["1300","1400","1500","1600","1700","1800","1900"],
+                            axisLine: {
                                 lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
+                                    color: '#ffffff'
                                 }
+                            },
+                            axisTick:{
+                                show:false,
+                            },
+                        },
+                        yAxis: {
+                            splitLine: {show: false},
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#ffffff',
+                                }
+                            },
+                            
+                            axisLabel:{
+                                formatter:'{value} ',
                             }
                         },
-                        itemStyle: {
-                            normal: {
-                                shadowBlur: 200,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            });
+                        series: [{
+                            name: '人数',
+                            type: 'bar',
+                            
+                            itemStyle: {
+                                normal: {
+                                    barBorderRadius: 5,
+                                    //颜色渐变
+                                    color: new echarts.graphic.LinearGradient(
+                                        0, 0, 0, 1,
+                                        [
+                                            {offset: 1, color: '#33cabb'},
+                                            {offset: 0, color: '#3EACE5'}
+                                        ]
+                                    )
+                                }
+                            },
+                            data: data
+                        }]
+                    });
+                })
+                .catch(error => {
+                console.error(error);
+                });
+            }
         }
+    
     }
- 
-}
 </script>
  
 <style scoped>

@@ -1,20 +1,98 @@
 <template>
+  <!-- <el-container>
+    <el-header>Header</el-header>
+    <el-container>
+      <el-aside width="200px">Aside</el-aside>
+      <el-main>Main</el-main>
+    </el-container>
+  </el-container> -->
+<div>
+  <div>
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="width: 100%;float: right;" @select="handleSelect">
+      <!-- <el-menu-item index="1">处理中心</el-menu-item> -->
+      <el-submenu index="1">
+        <template slot="title">用户管理</template>
+        <el-menu-item index="2-1">修改密码</el-menu-item>
+        <el-menu-item index="2-2">退出登录</el-menu-item>
+        <!-- <el-menu-item index="2-3">选项3</el-menu-item> -->
+        <!-- <el-submenu index="2-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="2-4-1">选项1</el-menu-item>
+          <el-menu-item index="2-4-2">选项2</el-menu-item>
+          <el-menu-item index="2-4-3">选项3</el-menu-item>
+        </el-submenu> -->
+      </el-submenu>
+      <!-- <el-menu-item index="3" disabled>消息中心</el-menu-item>
+      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
+    </el-menu>
+
+  </div>
+  <!-- <div>
+    <header>
+     
+      <span>{{ userInfo.username }}</span>
+     
+      <button @click="changePassword">修改密码</button>
+      <button @click="logout">退出</button>
+    </header>
+   
+  </div> -->
   <div class="container clearfix" ref="page">
-    <!-- 左侧导航栏开始 -->
+
+
+    <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="width: 100%;float: right;" @select="handleSelect">
+      <el-menu-item index="1">处理中心</el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">我的工作台</template>
+        <el-menu-item index="2-1">选项1</el-menu-item>
+        <el-menu-item index="2-2">选项2</el-menu-item>
+        <el-menu-item index="2-3">选项3</el-menu-item>
+        <el-submenu index="2-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="2-4-1">选项1</el-menu-item>
+          <el-menu-item index="2-4-2">选项2</el-menu-item>
+          <el-menu-item index="2-4-3">选项3</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-menu-item index="3" disabled>消息中心</el-menu-item>
+      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+    </el-menu> -->
+
+
+
+    <!-- 左侧导航栏开始 243946 96afbe ffffff-->
     <el-row class="tac">
       <el-col :span="12" class="navBox">
         <el-menu
           :default-active="defaultActive"
           class="el-menu-vertical-demo"
-          background-color="#243946"
-          text-color="#96afbe"
-          active-text-color="#ffffff"
+          background-color="#030923"
+          text-color="#d5c5e9"
+          active-text-color="#FFFFFF"
         >
           <h2>BUCTCODER</h2>
-          <el-menu-item index="1" @click="borrow()">
+
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="iconfont icon-sousuo2"></i>
+              <span>信息查询</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1" @click="borrow()">
+                <i class="iconfont icon-sousuo2"></i>
+                <span slot="title">Atcoder</span>
+              </el-menu-item>
+              <el-menu-item index="1-2" @click="borrow2()">
+                <i class="iconfont icon-sousuo2"></i>
+                <span slot="title">Codeforces</span>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- <el-menu-item index="1" @click="borrow()">
             <i class="iconfont icon-sousuo2"></i>
             <span slot="title">信息查询</span>
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item index="2" @click="stuInfo()">
             <i class="iconfont icon-geren3"></i>
             <span slot="title">学生基本信息</span>
@@ -36,7 +114,10 @@
                 <i class="iconfont icon-geren3"></i>
                 <span slot="title">柱状图</span>
               </el-menu-item>
-              <el-menu-item index="3-2">选项2</el-menu-item>
+              <el-menu-item index="3-2" @click="bing()">
+                <i class="iconfont icon-geren3"></i>
+                <span slot="title">饼状图</span>
+              </el-menu-item>
             </el-menu-item-group>
             <!-- <el-menu-item-group title="分组2">
               <el-menu-item index="1-3">选项3</el-menu-item>
@@ -53,6 +134,7 @@
     <!-- 左侧导航栏结束 -->
     <router-view class="right_bottom"></router-view>
   </div>
+</div>
 </template>
 
 <script>
@@ -62,6 +144,8 @@ export default {
     return {
       clientHeight: '',
       defaultActive: '1',
+
+      activeIndex: '1'
     }
   },
   async created () {
@@ -93,9 +177,21 @@ export default {
         this.$refs.page.style.height = clientHeight + 'px'
       }
     },
+
+
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+
+
     borrow () {
       if (this.$route.name !== 'SelectAll') {
         this.$router.replace({ path: '/SelectAll' })
+      }
+    },
+    borrow2 () {
+      if (this.$route.name !== 'SelectAllcf') {
+        this.$router.replace({ path: '/SelectAllcf' })
       }
     },
     stuInfo () {
@@ -106,6 +202,11 @@ export default {
     histogram () {
       if (this.$route.name !== 'VisualHistogram') {
         this.$router.replace({ path: '/VisualHistogram' })
+      }
+    },
+    bing () {
+      if (this.$route.name !== 'VisualB') {
+        this.$router.replace({ path: '/VisualB' })
       }
     }
   }
@@ -200,5 +301,21 @@ export default {
   font-size: 20px;
   width: calc(100% - 10px);
   margin: 5px;
+}
+
+.el-menu.el-menu--horizontal {
+  border-bottom: none !important;
+  float: right;
+  margin-left: 100px;
+  background: #030923;
+}
+/* .el-menu--horizontal > .el-menu-item.is-active {
+  border-bottom: 2px solid #3989fa;
+  color: #3989fa;
+  font-weight: bold;
+} */
+.el-menu--horizontal > .el-menu-item {
+  font-size: 16px;
+  margin: 0 15px 0 300px;
 }
 </style>
