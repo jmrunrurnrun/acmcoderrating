@@ -15,7 +15,7 @@ import java.util.Map;
  * @since 2022-06-16
  */
 public interface ICodeforcesService extends IService<Codeforces> {
-    List<Codeforces> getCodesByRatingRange(int minRating, int maxRating);
-    Map<String, Integer> calculateRatingSumByContest(String cfContest);
+//    List<Codeforces> getCodesByRatingRange(int minRating, int maxRating);
+//    Map<String, Integer> calculateRatingSumByContest(String cfContest);
     // 更多自定义方法...
 }

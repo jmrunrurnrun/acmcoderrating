@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2022-06-14
  */
 public interface IStudentService extends IService<Student> {
-    List<Student> searchByName(String keyword);
+//    List<Student> searchByName(String keyword);
 }
 
 

@@ -5,14 +5,17 @@ import com.buct.acmer.entity.Atcoder;
 import com.buct.acmer.entity.ContestInfo;
 import com.buct.acmer.entity.PublicProperty;
 import com.buct.acmer.entity.Student;
+import com.buct.acmer.mapper.StudentMapper;
 import com.buct.acmer.service.impl.StudentServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,10 +60,32 @@ public class StudentController {
 //    }
 
 
+//    @ApiOperation("按名字模糊查询学生")
+//    @GetMapping("/all/{keyword}")
+//    public List<Student> searchByName(@PathVariable String keyword) {
+//        return studentService.searchByName(keyword);
+//    }
+
+    private StudentMapper stuMapper;
+
+    @Autowired
+    public StudentController(StudentMapper stuMapper) { this.stuMapper = stuMapper; }
     @ApiOperation("按名字模糊查询学生")
     @GetMapping("/all/{keyword}")
-    public List<Student> searchByName(@PathVariable String keyword) {
-        return studentService.searchByName(keyword);
+    public PublicProperty<List<Student>> searchByName(@PathVariable String keyword) {
+        List<Student> slist = new ArrayList<>();
+        slist = stuMapper.searchByName(keyword);
+        return new PublicProperty(200,"success",slist);
+    }
+
+    @ApiOperation("按年级分类")
+    @GetMapping("/grades")
+    public PublicProperty<List<Integer>> searchByName() {
+        List<Integer> slist = new ArrayList<>();
+        slist.add(stuMapper.count(1900,2000));
+        slist.add(stuMapper.count(2000,2100));
+        slist.add(stuMapper.count(2100,2200));
+        return new PublicProperty(200,"success",slist);
     }
 
     @ApiOperation("新增学生信息")

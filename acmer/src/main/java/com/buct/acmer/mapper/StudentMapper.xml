@@ -5,4 +5,9 @@
     <select id="searchByName" resultType="com.buct.acmer.entity.Student">
         SELECT * FROM student WHERE stu_name LIKE CONCAT('%', #{keyword}, '%')
     </select>
+
+    <select id="count" resultType="int" parameterType="map">
+        SELECT COUNT(CASE WHEN stu_class > #{begin} AND stu_class < #{end} THEN 1 END)
+        FROM student
+    </select>
 </mapper>

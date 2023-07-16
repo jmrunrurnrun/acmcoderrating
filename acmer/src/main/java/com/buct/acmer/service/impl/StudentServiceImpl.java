@@ -21,11 +21,11 @@ import java.util.List;
 @Service
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements IStudentService {
 
-    @Resource
-    private StudentMapper studentMapper;
-
-    @Override
-    public List<Student> searchByName(String keyword) {
-        return studentMapper.searchByName(keyword);
-    }
+//    @Resource
+//    private StudentMapper studentMapper;
+//
+//    @Override
+//    public List<Student> searchByName(String keyword) {
+//        return studentMapper.searchByName(keyword);
+//    }
 }
