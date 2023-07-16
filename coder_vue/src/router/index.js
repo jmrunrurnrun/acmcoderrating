@@ -4,6 +4,10 @@ import StudentIndex from '../views/StudentIndex.vue'
 import SelectAll from '../views/studentBox/SelectAll.vue'
 import StuInfo from '../views/studentBox/StuInfo'
 import VisualHistogram from '../views/visualBox/VisualHistogram.vue'
+import SelectAllcf from '../views/studentBox/SelectAllcf.vue'
+import VisualB from '../views/visualBox/VisualB.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 Vue.use(VueRouter)
 
@@ -17,7 +21,19 @@ VueRouter.prototype.replace = function replace (location) {
   return originalReplace.call(this, location).catch(err => err)
 }
 
-const routes = [{
+const routes = [
+  {
+    path: '/',
+    name: 'Login',
+    component: Login,
+    // redirect: '/Login',
+  },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: Register
+  },
+  {
   path: '/',
   component: StudentIndex,
   redirect: '/SelectAll',
@@ -25,6 +41,10 @@ const routes = [{
     path: '/SelectAll',
     name: 'SelectAll',
     component: SelectAll
+  },{
+    path: '/SelectAllcf',
+    name: 'SelectAllcf',
+    component: SelectAllcf
   }, {
     path: '/StuInfo',
     name: 'StuInfo',
@@ -33,6 +53,10 @@ const routes = [{
     path: '/VisualHistogram',
     name: 'VisualHistogram',
     component: VisualHistogram
+  }, {
+    path: '/VisualB',
+    name: 'VisualB',
+    component: VisualB
   }
   ]
 }
