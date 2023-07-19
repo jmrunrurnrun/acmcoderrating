@@ -8,124 +8,92 @@
   </el-container> -->
 <div>
   <div>
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="width: 100%;float: right;" @select="handleSelect">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="width: 90%;float: right;position: fixed;" @select="handleSelect"
+    background-color="#063631"
+    text-color="#85CCB1"
+    active-text-color="#F2F7D2">
       <!-- <el-menu-item index="1">处理中心</el-menu-item> -->
-      <el-submenu index="1">
+      <el-submenu index="1" style="margin-left: 1080px;">
         <template slot="title">用户管理</template>
-        <el-menu-item index="2-1">修改密码</el-menu-item>
-        <el-menu-item index="2-2">退出登录</el-menu-item>
-        <!-- <el-menu-item index="2-3">选项3</el-menu-item> -->
-        <!-- <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu> -->
+        <el-menu-item index="2-1" @click="modify()">修改密码</el-menu-item>
+        <el-menu-item index="2-2" @click="exit()">退出登录</el-menu-item>
       </el-submenu>
-      <!-- <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item> -->
     </el-menu>
 
+    <el-dialog
+      :visible.sync="showDialog"
+      :title="dialogtitle">
+
+      <el-form :model="formData" :rules="rules" status-icon ref="formData" label-position="left" label-width="0px" class="demo-formData">
+        <el-form-item prop="username">
+          <el-input :disabled="true" type="text" v-model="this.userid" autocomplete="off" placeholder="用户名"></el-input>
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" v-model="formData.userPassword" autocomplete="off" placeholder="密码"></el-input>
+        </el-form-item>
+        <el-form-item prop="checkPass">
+          <el-input type="password" v-model="formData.checkPass" autocomplete="off" placeholder="确认密码"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer">
+        <el-button @click="submit('formData')"> 确认</el-button>
+        <el-button @click="cancel()"> 取消</el-button>
+      </span>
+    </el-dialog>
   </div>
-  <!-- <div>
-    <header>
-     
-      <span>{{ userInfo.username }}</span>
-     
-      <button @click="changePassword">修改密码</button>
-      <button @click="logout">退出</button>
-    </header>
-   
-  </div> -->
+
   <div class="container clearfix" ref="page">
-
-
-    <!-- <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="width: 100%;float: right;" @select="handleSelect">
-      <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu index="2">
-        <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
-      </el-submenu>
-      <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-    </el-menu> -->
-
-
-
     <!-- 左侧导航栏开始 243946 96afbe ffffff-->
     <el-row class="tac">
       <el-col :span="12" class="navBox">
         <el-menu
           :default-active="defaultActive"
           class="el-menu-vertical-demo"
-          background-color="#030923"
-          text-color="#d5c5e9"
-          active-text-color="#FFFFFF"
+          background-color="#063631"
+          text-color="#85CCB1"
+          active-text-color="#F2F7D2"
         >
           <h2>BUCTCODER</h2>
 
           <el-submenu index="1">
             <template slot="title">
-              <i class="iconfont icon-sousuo2"></i>
+              <i class="iconfont icon-sousuo2" style="color:#85CCB1"></i>
               <span>信息查询</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="1-1" @click="borrow()">
-                <i class="iconfont icon-sousuo2"></i>
+                <i class="el-icon-medal" style="color:#85CCB1"></i>
                 <span slot="title">Atcoder</span>
               </el-menu-item>
               <el-menu-item index="1-2" @click="borrow2()">
-                <i class="iconfont icon-sousuo2"></i>
+                <i class="el-icon-trophy" style="color:#85CCB1"></i>
                 <span slot="title">Codeforces</span>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 
-          <!-- <el-menu-item index="1" @click="borrow()">
-            <i class="iconfont icon-sousuo2"></i>
-            <span slot="title">信息查询</span>
-          </el-menu-item> -->
           <el-menu-item index="2" @click="stuInfo()">
-            <i class="iconfont icon-geren3"></i>
+            <i class="iconfont icon-geren3" style="color:#85CCB1"></i>
             <span slot="title">学生基本信息</span>
           </el-menu-item>
 
-          <!-- <el-menu-item index="3" @click="histogram()">
-            <i class="iconfont icon-geren3"></i>
-            <span slot="title">图</span>
-          </el-menu-item> -->
 
           <el-submenu index="3">
             <template slot="title">
-              <i class="el-icon-data-analysis"></i>
+              <i class="el-icon-data-analysis" style="color:#85CCB1"></i>
               <span>数据可视化</span>
             </template>
             <el-menu-item-group>
               <template slot="title">分组一</template>
               <el-menu-item index="3-1" @click="histogram()">
-                <i class="iconfont icon-geren3"></i>
+                <i class="el-icon-s-data" style="color:#85CCB1"></i>
                 <span slot="title">柱状图</span>
               </el-menu-item>
               <el-menu-item index="3-2" @click="bing()">
-                <i class="iconfont icon-geren3"></i>
+                <i class="el-icon-pie-chart" style="color:#85CCB1"></i>
                 <span slot="title">饼状图</span>
               </el-menu-item>
             </el-menu-item-group>
-            <!-- <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu> -->
           </el-submenu>
 
         </el-menu>
@@ -138,14 +106,47 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 
 export default {
   data () {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.formData.userPassword) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       clientHeight: '',
       defaultActive: '1',
 
-      activeIndex: '1'
+      activeIndex: '1',
+      userid: '',
+      showDialog: false,
+      dialogtitle: '修改密码',
+      formData: {},
+      initialForm: {
+        // userId: this.userid,
+        // userPassword: '',
+        // checkPass: ''
+      },
+      rules: {
+        pass: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        checkPass: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
+      }
     }
   },
   async created () {
@@ -154,6 +155,24 @@ export default {
     }
   },
   mounted () {
+    // 获取传递过来的用户名参数
+    //const username = this.$route.params.username;
+    // 使用获取到的用户名参数进行其他操作
+    axios.post('/stu/info/acmer/user/data')
+    .then(response => {
+      console.log(response)
+      if(response.data.code === 400){
+        this.userid=response.data.data.userId;
+      }
+    })
+    .catch(error => {
+      // 获取失败
+      console.error(error);
+      // 根据错误进行相应的处理
+    });
+    console.log('当前用户的用户名:'+this.userid);
+    //this.userid=username
+    console.log(this.userid)
     // 获取浏览器可视区域高度
     this.clientHeight = `${document.documentElement.clientHeight}`
     const that = this
@@ -208,6 +227,50 @@ export default {
       if (this.$route.name !== 'VisualB') {
         this.$router.replace({ path: '/VisualB' })
       }
+    },
+    modify () {
+      console.log('用户名：'+this.userid)
+      this.showDialog = true
+      this.formData.userId=this.username
+    },
+    submit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // 校验通过，发送修改请求
+          console.log(this.formData)
+          this.formData.userId=this.userid
+          this.$axios.post('/stu/info/acmer/user/update', this.formData)
+            .then(response => {
+              // 修改成功
+              console.log(response.data);
+              if (response.data.code === 200) {
+                    // 修改成功
+                    alert('修改成功！');
+                    this.formData = {...this.initialForm};
+                    this.showDialog = false;
+                  } else {
+                    // 修改失败，显示错误信息
+                    alert(response.data.message)
+                    this.$message.error(response.data.message);
+                  }
+                })
+                .catch(error => {
+                  // 修改失败
+                  console.error(error);
+                  // 根据错误进行相应的处理
+                });
+              } else {
+                console.log('error submit');
+                return false;
+              }
+            });
+    },
+    cancel () {
+      this.formData = {...this.initialForm};
+      this.showDialog = false;
+    },
+    exit () {
+      this.$router.push({ path: "/" });
     }
   }
 }
@@ -216,8 +279,10 @@ export default {
 <style scoped>
 .container {
   width: 100%;
+  height: 100%;
   margin: 0 auto;
-  background-color: #f3f5f6;
+  background-color: #F2F7D2;
+  /* background: url('../assets/images/background.jpeg');#f3f5f6 */
 }
 .container .tac {
   float: left;
@@ -294,7 +359,9 @@ export default {
 }
 .container .right_bottom {
   width: calc(100% - 256px);
+  height: auto;
   float: right;
+  margin-top: 5.5%;
   margin-right: 18px;
 }
 .notice-info .el-tag {
@@ -303,17 +370,22 @@ export default {
   margin: 5px;
 }
 
+.el-menu {
+  border:0!important;
+}
+
 .el-menu.el-menu--horizontal {
   border-bottom: none !important;
   float: right;
-  margin-left: 100px;
-  background: #030923;
+  /* position: fixed; */
+  margin-left: 200px;
+  background: #454333;
 }
-/* .el-menu--horizontal > .el-menu-item.is-active {
+.el-menu--horizontal > .el-menu-item.is-active {
   border-bottom: 2px solid #3989fa;
   color: #3989fa;
   font-weight: bold;
-} */
+}
 .el-menu--horizontal > .el-menu-item {
   font-size: 16px;
   margin: 0 15px 0 300px;
