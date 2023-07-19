@@ -1,4 +1,4 @@
-# books_management_system
+# acmcoders_data_management_system
 
 ## Project setup
 ```
