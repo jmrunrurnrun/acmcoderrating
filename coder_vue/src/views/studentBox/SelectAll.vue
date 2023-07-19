@@ -16,22 +16,24 @@
         </el-form-item> -->
 
         <el-form-item>
-            <el-button type="primary" @click="serachName">查询</el-button>
+            <el-button type="button1" @click="serachName">查询</el-button>
         </el-form-item>
         <el-form-item>
-            <el-button type="success" @click="getInfo()">查询重置</el-button>
+            <el-button type="button2" @click="getInfo()">查询重置</el-button>
         </el-form-item>
 
         <el-form-item>
-            <el-button type="primary" @click="rising">按排名升序</el-button>
+            <el-button type="button3" @click="rising">按排名升序</el-button>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="rankdown">按排名降序</el-button>
+            <el-button type="button4" @click="rankdown">按排名降序</el-button>
         </el-form-item>
 
       </el-form>
     </div>
-    <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading">
+    <el-table class="elTable" :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%;height: 500px;" v-loading="loading"
+      :header-cell-style="{background:'#85CCB1', color:'#797979', borderColor:'#85CCB1'}"
+      >
       @sort-change="sortChange"
       <el-table-column prop="id" label="id" width="130px" sortable ></el-table-column>
       <el-table-column prop="date" label="date" width="210" sortable ></el-table-column>
@@ -66,7 +68,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      pageSize: 7, // 表示一页多少条数据
+      pageSize: 5, // 表示一页多少条数据
       totalNum: 0,
       currentPage: 1,
       tableData: [],
@@ -267,4 +269,47 @@ export default {
   justify-content: center;
   margin-top: 5px;
 }
+.elTable {
+    border: 1px solid #85CCB1
+  }
+  .el-button--button1 {
+    color: #AAD19F;
+    background-color: white;
+    border-color: #AAD19F;
+  }
+.el-button--button1:hover {
+    color: white;
+    background-color: #AAD19F;
+    border-color: #AAD19F;
+  }
+  .el-button--button2 {
+    color: #97C2AD;
+    background-color: white;
+    border-color: #97C2AD;
+  }
+  .el-button--button2:hover {
+    color: white;
+    background-color: #97C2AD;
+    border-color: #97C2AD;
+  }
+  .el-button--button3 {
+    color: #84B3BB;
+    background-color: white;
+    border-color: #84B3BB;
+  }
+  .el-button--button3:hover {
+    color: white;
+    background-color: #84B3BB;
+    border-color: #84B3BB;
+  }
+  .el-button--button4 {
+    color: #5EAD82;
+    background-color: white;
+    border-color: #5EAD82;
+  }
+  .el-button--button4:hover {
+    color: white;
+    background-color: #5EAD82;
+    border-color: #5EAD82;
+  }
 </style>

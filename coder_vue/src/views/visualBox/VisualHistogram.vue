@@ -1,12 +1,12 @@
 <template>
     <div >
         <div class="titles" style="margin-top: 2%;margin-bottom: 1%">
-            <h1>Codeforces积分区间统计</h1>
-            <h3>Codeforces积分区间统计（横轴积分，纵轴人数）</h3>
+            <h2 style="color:#0C4D4B ">Codeforces积分区间统计</h2>
+            <!-- <h3>Codeforces积分区间统计（横轴积分，纵轴人数）</h3> -->
         </div>
         
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-        <div id="main1" :style="{width: '100%', height: '600px'}"></div>
+        <div id="main1" :style="{width: '100%', height: '550px'}"></div>
     </div>
 </template>
  
@@ -35,11 +35,14 @@
                     let myChart = this.$echarts.init(document.getElementById('main1'))
                     // 绘制图表
                     myChart.setOption({
-                        backgroundColor: '#191E40',
+                        backgroundColor: '#FFFFFF',
                         title: {
                             text: 'CodeforcesRating',
                             subtext: 'Codeforces积分区间统计（横轴积分，纵轴人数）',
-                            left: 'center'
+                            left: 'center',
+                            itemGap:20,
+                            top:20,
+                            color:"#797979"
                         },
                         //subtitle: { text: 'Codeforces积分区间统计（横轴积分，纵轴人数）' },
                         tooltip: {
@@ -55,15 +58,18 @@
                                 label: {
                                     fontSize:16,
                                     show: true,
-                                    backgroundColor: '#7B7DDC'
+                                    backgroundColor: '#85CCB1'
                                 }
                             }
+                        },
+                        grid: {
+                            top: '20%'
                         },
                         xAxis: {
                             data: ["1300","1400","1500","1600","1700","1800","1900"],
                             axisLine: {
                                 lineStyle: {
-                                    color: '#ffffff'
+                                    color: '#85CCB1'
                                 }
                             },
                             axisTick:{
@@ -74,7 +80,7 @@
                             splitLine: {show: false},
                             axisLine: {
                                 lineStyle: {
-                                    color: '#ffffff',
+                                    color: '#85CCB1',
                                 }
                             },
                             

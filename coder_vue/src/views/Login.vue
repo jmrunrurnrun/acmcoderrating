@@ -1,17 +1,17 @@
 <template>
   <div class="login-container">
     <el-form :model="ruleForm" :rules="rules" status-icon ref="ruleForm" label-position="left" label-width="0px" class="demo-ruleForm">
-      <h3 class="title" style="text-align:center;margin:10px 0 20px 0">系统登陆</h3>
+      <h3 class="title" style="text-align:center;margin:10px 0 20px 0;color: #063631;">系统登陆</h3>
       <el-form-item prop="username">
-        <el-input type="text" v-model="ruleForm.userId" autocomplete="off" placeholder="用户名"></el-input>
+        <el-input type="text" v-model="ruleForm.userId" autocomplete="off" placeholder="用户名" ref="userIdInput"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input type="password" v-model="ruleForm.userPassword" autocomplete="off" placeholder="密码"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        <el-button type="success" @click="resetForm()">重置</el-button>
-        <span style="margin-left:20px;">如果您还没有账号请先 <span style="color:#409EFF;cursor:pointer" @click="register()">注册</span></span>
+        <el-button type="button1" @click="submitForm('ruleForm')">登录</el-button>
+        <el-button type="button2" @click="resetForm()">重置</el-button>
+        <span style="margin-left:20px;color: #797979;">如果您还没有账号请先 <span style="color:#6EA665;cursor:pointer" @click="register()">注册</span></span>
     </el-form-item>
     </el-form>
   </div>
@@ -66,6 +66,7 @@
         //   }
         // };
         return {
+          // username: '',//传参用
           ruleForm: {},//{
             // userId: '',
             // userPassword: '',
@@ -92,7 +93,7 @@
           this.$refs[formName].validate((valid) => {
             if (valid) {
               // 校验通过，发送登录请求
-              this.$axios.post('/stu/info/acmer/user/login', this.ruleForm)//{
+              axios.post('/stu/info/acmer/user/login', this.ruleForm)//{
                 // userId: this.ruleForm.userId,
                 // userPassword: this.ruleForm.userPassword
               //})
@@ -102,6 +103,9 @@
                 if (response.data.code === 200) {
                   // 登录成功，跳转到其他页面或执行其他操作
                   alert('登录成功！');
+                  // const userInput = this.$refs.userIdInput.value;
+                  // console.log(userInput)
+                  // this.$router.push({ name: 'SelectAll', params: { username: userInput } });
                   this.$router.push({ path: "/SelectAll" });
                 } else {
                   // 登录失败，显示错误信息
@@ -139,6 +143,10 @@
 .login-container {
     width: 100%;
     height: 100%;
+    background-image: url("../assets/images/green.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
 }
 .demo-ruleForm {
     -webkit-border-radius: 5px;
@@ -150,4 +158,24 @@
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
 }
+.el-button--button1 {
+    color: white;
+    background-color: #AAD19F;
+    border-color: #AAD19F;
+  }
+.el-button--button1:hover {
+    color: #AAD19F;
+    background-color: white;
+    border-color: #AAD19F;
+  }
+  .el-button--button2 {
+    color: white;
+    background-color: #97C2AD;
+    border-color: #97C2AD;
+  }
+  .el-button--button2:hover {
+    color: #97C2AD;
+    background-color: white;
+    border-color: #97C2AD;
+  }
 </style>

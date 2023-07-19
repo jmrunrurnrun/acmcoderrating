@@ -1,7 +1,10 @@
 <template>
     <div >
+        <div class="titles" style="margin-top: 2%;margin-bottom: 1%">
+            <h2 style="color:#0C4D4B ">student年级分布统计</h2>
+        </div>
         <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-        <div id="main2" :style="{width: '100%', height: '600px'}"></div>
+        <div id="main2" :style="{width: '100%', height: '550px'}"></div>
     </div>
 </template>
  
@@ -37,14 +40,14 @@ export default {
            
                     // 绘制图表
                     myChart.setOption({
-                        backgroundColor: '#2c343c',
+                        backgroundColor: '#FFFFFF',
                         title: {
                             text: '年级分布统计',
                             subtext: 'BUCTcoder各年级分布',
                             left: 'center',
                             top: 40,
                             textStyle: {
-                            color: '#ccc'
+                            color: '#797979'
                             }
                         },
                         tooltip: {
@@ -69,13 +72,13 @@ export default {
                                     //position: 'inner',
                                     //formatter:'{d}%',
                                     //textStyle: {
-                                        color: 'rgba(255, 255, 255, 0.3)'
+                                        color: '#797979'//'rgba(255, 255, 255, 0.3)'
                                     //}
                                 }
                             },
                             labelLine: {
                                 lineStyle: {
-                                    color: 'rgba(255, 255, 255, 0.3)'
+                                    color: '#797979'//'rgba(255, 255, 255, 0.3)'
                                 },
                                 smooth: 0.2,
                                 length: 10,

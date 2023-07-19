@@ -1,7 +1,7 @@
 <template>
     <div class="register-container">
       <el-form :model="ruleForm" :rules="rules" status-icon ref="ruleForm" label-position="left" label-width="0px" class="demo-ruleForm">
-        <h3 class="title" style="text-align:center;margin:10px 0 20px 0">系统注册</h3>
+        <h3 class="title" style="text-align:center;margin:10px 0 20px 0;color: #063631;">系统注册</h3>
         <el-form-item prop="username">
           <el-input type="text" v-model="ruleForm.userId" autocomplete="off" placeholder="用户名"></el-input>
         </el-form-item>
@@ -12,8 +12,8 @@
           <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off" placeholder="确认密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
-          <el-button type="success" @click="resetForm()">重置</el-button>
+          <el-button type="button1" @click="submitForm('ruleForm')">注册</el-button>
+          <el-button type="button2" @click="resetForm()">重置</el-button>
       </el-form-item>
       </el-form>
     </div>
@@ -133,8 +133,12 @@
   
   <style>
   .register-container {
-      width: 100%;
-      height: 100%;
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/images/green.jpg");
+    background-size: cover;
+    background-position: center;
+    position: fixed;
   }
   .demo-ruleForm {
       -webkit-border-radius: 5px;
@@ -145,5 +149,25 @@
       background: #fff;
       border: 1px solid #eaeaea;
       box-shadow: 0 0 25px #cac6c6;
+  }
+  .el-button--button1 {
+    color: white;
+    background-color: #AAD19F;
+    border-color: #AAD19F;
+  }
+  .el-button--button1:hover {
+    color: #AAD19F;
+    background-color: white;
+    border-color: #AAD19F;
+  }
+  .el-button--button2 {
+    color: white;
+    background-color: #97C2AD;
+    border-color: #97C2AD;
+  }
+  .el-button--button2:hover {
+    color: #97C2AD;
+    background-color: white;
+    border-color: #97C2AD;
   }
   </style>

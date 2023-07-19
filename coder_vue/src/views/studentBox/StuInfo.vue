@@ -4,7 +4,7 @@
       <!-- 查找框 -->
       <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
         <el-form-item>
-          <el-button type="primary" @click="addStu">新增</el-button>
+          <el-button type="button0" @click="addStu">新增</el-button>
         </el-form-item>
      
         <el-form-item label="Name" :rules="[
@@ -13,45 +13,19 @@
             <el-input v-model="formInline.name" placeholder="请输入Name查询"></el-input>
         </el-form-item>
 
-        <!-- <el-form-item label="学号" :rules="[{
-            required: true, message: '请输入学号！', trigger: 'blur'
-        }]" prop="number">
-            <el-input v-model="formInline.number" placeholder="请输入学号查询"></el-input>
-        </el-form-item> -->
-
         <el-form-item>
-            <el-button type="primary" @click="serachName">查询</el-button>
+            <el-button type="button2" @click="serachName">查询</el-button>
         </el-form-item>
         <el-form-item>
-            <el-button type="success" @click="getInfo()">查询重置</el-button>
+            <el-button type="button3" @click="getInfo()">查询重置</el-button>
         </el-form-item>
 
       </el-form>
     </div>
-     <!-- 查找框 -->
-     <!-- <el-form :inline="true" :model="formInline" class="demo-form-inline" ref="find">
-        <el-form-item label="Name" :rules="[
-            { required: true, message: '请输入Name！', trigger: 'blur' }
-        ]" prop="name">
-            <el-input v-model="formInline.id" placeholder="请输入Name查询"></el-input>
-        </el-form-item> -->
 
-        <!-- <el-form-item label="学号" :rules="[{
-            required: true, message: '请输入学号！', trigger: 'blur'
-        }]" prop="number">
-            <el-input v-model="formInline.number" placeholder="请输入学号查询"></el-input>
-        </el-form-item> -->
-
-        <!-- <el-form-item>
-            <el-button type="primary" @click="serachName">查询</el-button>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="success" @click="getInfo()">查询重置</el-button>
-        </el-form-item>
-
-      </el-form> -->
-
-    <el-table :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading">
+    <el-table class="elTable" :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)" stripe border style="width: 100%" v-loading="loading"
+    :header-cell-style="{background:'#85CCB1', color:'#797979', borderColor:'#85CCB1'}"
+    >
       <el-table-column prop="stuNo" label="stuNo" width="120"></el-table-column>
       <el-table-column prop="stuName" label="stuName" ></el-table-column>
       <el-table-column prop="stuClass" label="stuClass" ></el-table-column>
@@ -110,7 +84,7 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      pageSize: 7, // 表示一页多少条数据
+      pageSize: 8, // 表示一页多少条数据
       totalNum: 0,
       currentPage: 1,
       tableData: [],
@@ -241,10 +215,10 @@ export default {
 
 <style scoped>
 .container {
-  /* margin-top: 20px;
+  margin-top: 20px;
   .demo-form-inline {
       text-align: left;
-  } */
+  }
   width: 100%;
   background-color: white;
   box-sizing: border-box;
@@ -287,4 +261,43 @@ export default {
   justify-content: center;
   margin-top: 5px;
 }
+.elTable {
+    border: 1px solid #85CCB1
+  }
+  .el-button--button0 {
+    color: #F1CB8A;
+    background-color: white;
+    border-color: #F1CB8A;
+  }
+  .el-button--button0:hover {
+    color: white;
+    background-color: #F1CB8A;
+    border-color: #F1CB8A;
+  }
+  .el-button--button2 {
+    color: #97C2AD;
+    background-color: white;
+    border-color: #97C2AD;
+  }
+  .el-button--button2:hover {
+    color: white;
+    background-color: #97C2AD;
+    border-color: #97C2AD;
+  }
+  .el-button--button3 {
+    color: #84B3BB;
+    background-color: white;
+    border-color: #84B3BB;
+  }
+  .el-button--button3:hover {
+    color: white;
+    background-color: #84B3BB;
+    border-color: #84B3BB;
+  }
+  .el-button--text {
+    color: #85CCB1;
+  }
+  .el-button--text:hover {
+    color: #F1CB8A;
+  }
 </style>
